@@ -15,8 +15,8 @@ const tabs = [
 ]
 
 const tabListStyles = {
-  tabList: 'border border-red-500 text-[#675a53]',
-  tab: 'p-4 transition duration-500 hover:bg-[#4d1939] hover:text-[#ffffff]'
+  tabList: 'text-[#675a53]',
+  tab: 'p-2 sm:p-4 transition duration-500 hover:bg-[#4d1939] hover:text-[#ffffff]'
 }
 </script>
 
@@ -25,15 +25,9 @@ const tabListStyles = {
     <div class="logo">
       <img class="w-[55px]" src="@/assets/images/logo.svg" />
     </div>
+
     <NavTabs :tabs="tabs" :styles="tabListStyles" />
 
     <NavFeatures />
-
-    <!-- <div class="group">
-      <a href="#" class="hover:text-blue-500">Link</a>
-      <span class="opacity-0 transition-opacity duration-1000 group-hover:opacity-100"
-        >Tooltip</span
-      >
-    </div> -->
   </div>
 </template>

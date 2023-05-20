@@ -13,7 +13,7 @@ function toggleSearch() {
 </script>
 
 <template>
-  <div class="flex space-x-5">
+  <div class="flex space-x-2 sm:space-x-5">
     <div>
       <Icon
         id="search-icon"
@@ -35,7 +35,7 @@ function toggleSearch() {
     <div class="group">
       <Icon class="cursor-pointer" name="iconamoon:profile-light" size="32" color="#C3AE8B" />
       <ul
-        class="absolute right-10 overflow-hidden rounded-lg bg-[#F1EDEF] opacity-0 transition-opacity duration-1000 group-hover:opacity-100"
+        class="absolute right-10 z-20 overflow-hidden rounded-lg bg-[#F1EDEF] opacity-0 transition-opacity duration-1000 group-hover:opacity-100"
       >
         <li class="cursor-pointer px-4 py-1 hover:bg-[#4d1939] hover:text-[#ffffff]">登入帳號</li>
         <li class="cursor-pointer px-4 py-1 hover:bg-[#4d1939] hover:text-[#ffffff]">

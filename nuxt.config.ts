@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: ['nuxt-icon'],
-  css: ['~/assets/css/main.css'],
+  css: ['~/assets/css/main.css', '@egjs/vue3-flicking/dist/flicking.css'],
   postcss: {
     plugins: {
       tailwindcss: {},
