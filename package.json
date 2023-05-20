@@ -30,6 +30,8 @@
     "@egjs/vue3-flicking": "^4.10.7",
     "@headlessui/tailwindcss": "^0.1.3",
     "@headlessui/vue": "^1.7.13",
-    "daisyui": "^2.51.6"
+    "@prisma/client": "^4.14.1",
+    "daisyui": "^2.51.6",
+    "prisma": "^4.14.1"
   }
 }
