@@ -11,22 +11,23 @@ datasource db {
 }
 
 model Product {
-  id         String    @id @default(cuid())
-  name       String    @db.VarChar(20)
-  image_url String
-  price      Int
-  stock      Int
-  features   String[]
-  created_at DateTime  @default(now()) @db.Timestamp
-  updated_at DateTime  @updatedAt @db.Timestamp
-  deleted_at DateTime? @db.Timestamp
+  id        String    @id @default(cuid())
+  name      String    @unique @db.VarChar(20)
+  imageUrl  String    @map("image_url")
+  price     Int
+  stock     Int
+  isPopular Boolean   @map("is_popular")
+  features  String[]
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamp
+  deletedAt DateTime? @map("deleted_at") @db.Timestamp
 
-  category    Category @relation(fields: [category_id], references: [id])
-  category_id String
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
 }
 
 model Category {
   id      String    @id @default(cuid())
-  name    String    @db.VarChar(20)
+  name    String    @unique @db.VarChar(20)
   product Product[]
 }
