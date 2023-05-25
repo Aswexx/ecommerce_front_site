@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 
+@layer base {
+	:root {
+		--active-color: #4d1939
+	}
+}
+
 span.flicking-pagination-bullet-active {
 	background-color: #a99e73;
 	width: 10px;

@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['nuxt-icon', '@pinia/nuxt', '@unlazy/nuxt'],
+  modules: ['nuxt-icon', '@pinia/nuxt', '@unlazy/nuxt', '@nuxtjs/supabase'],
   css: ['~/assets/css/main.css', '@egjs/vue3-flicking/dist/flicking.css'],
   postcss: {
     plugins: {
@@ -13,5 +13,10 @@ export default defineNuxtConfig({
   },
   unlazy: {
     ssr: false
+  },
+  runtimeConfig: {
+    public: {
+      HOST_URL: process.env.HOST_URL
+    }
   }
 })

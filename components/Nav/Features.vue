@@ -1,4 +1,7 @@
 <script setup lang="ts">
+const supabase = useSupabaseClient()
+const user = useSupabaseUser()
+
 const searchInput = ref<HTMLInputElement>()
 const searchOpened = ref(false)
 
@@ -10,6 +13,33 @@ function toggleSearch() {
     })
   }
 }
+
+async function login() {
+  if (user.value) return navigateTo('/profile')
+  const baseUrl = useRuntimeConfig().public.HOST_URL
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: `${baseUrl}/profile`
+    }
+  })
+
+  if (error) {
+    return console.error(error)
+  }
+}
+
+async function logout() {
+	const supabase = useSupabaseClient()
+	const { error } = await supabase.auth.signOut()
+
+	if (error) {
+		return console.error(error)
+	}
+
+	navigateTo('/')
+}
+
 </script>
 
 <template>
@@ -37,10 +67,16 @@ function toggleSearch() {
       <ul
         class="absolute right-10 z-20 overflow-hidden rounded-lg bg-[#F1EDEF] opacity-0 transition-opacity duration-1000 group-hover:opacity-100"
       >
-        <li class="cursor-pointer px-4 py-1 hover:bg-[#4d1939] hover:text-[#ffffff]">登入帳號</li>
+        <li @click="login" class="cursor-pointer px-4 py-1 hover:bg-[#4d1939] hover:text-[#ffffff]">
+          {{ user ? '個人頁面' : 'Google 登入' }}
+        </li>
         <li class="cursor-pointer px-4 py-1 hover:bg-[#4d1939] hover:text-[#ffffff]">
           未註冊帳號訂單查詢
         </li>
+        <li v-if="user" @click="logout" class="cursor-pointer px-4 py-1 hover:bg-[#4d1939] hover:text-[#ffffff]">
+          登出
+        </li>
+
       </ul>
     </div>
 

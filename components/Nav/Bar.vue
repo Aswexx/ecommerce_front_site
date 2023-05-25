@@ -16,13 +16,13 @@ const tabs = [
 
 const tabListStyles = {
   tabList: 'text-[#675a53]',
-  tab: 'p-2 sm:p-4 transition duration-500 hover:bg-[#4d1939] hover:text-[#ffffff]'
+  tab: 'p-1 text-xs transition duration-500 hover:bg-[#4d1939] hover:text-[#ffffff] sm:p-4 sm-flex-col sm:text-base'
 }
 </script>
 
 <template>
   <div class="relative flex items-center justify-between border border-blue-300 bg-[#F1EDEF] px-4">
-    <div class="logo">
+    <div class="logo cursor-pointer" @click="navigateTo('/')">
       <img class="w-[55px]" src="@/assets/images/logo.svg" />
     </div>
 

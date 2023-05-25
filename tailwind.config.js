@@ -9,7 +9,11 @@ module.exports = {
     './app.vue',
   ],
   theme: {
-    extend: {}
+    extend: {
+      colors: {
+        'active-color': 'var(--active-color)'
+      }
+    }
   },
   plugins: [require('daisyui')],
   daisyui: {

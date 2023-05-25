@@ -19,7 +19,7 @@ const plugins = [
 <template>
   <Flicking
     class="mx-auto w-full"
-    :options="{ bound: true, panelsPerView: 1, circular: true }"
+    :options="{ panelsPerView: 1, circular: true }"
     :plugins="plugins"
   >
     <div
