@@ -6,7 +6,6 @@ export const useProductStore = defineStore('product', () => {
   async function getProducts() {
     const { data, error } = await useFetch('/api/products')
     if (data.value) {
-      console.log('push..1')
       products.value.push(...data.value)
     }
 

@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 import { useProductStore } from '@/stores/product'
+import { useUserStore } from '@/stores/user'
+
 const productStore = useProductStore()
+const userStore = useUserStore()
 
 const popularProducts = computed(() => {
   return productStore.products.filter(p => p.isPopular)
@@ -9,6 +12,21 @@ const popularProducts = computed(() => {
 if (process.server) {
   await productStore.getProducts()
 }
+
+function handleResize() {
+  userStore.viewportWidth = window.innerWidth
+}
+
+onMounted(() => {
+  userStore.viewportWidth = window.innerWidth
+  window.addEventListener('resize', handleResize)
+})
+
+onUnmounted(() => {
+  alert('unmounted')
+  window.removeEventListener('resize', handleResize)
+})
+
 </script>
 <template>
   <NuxtLayout>

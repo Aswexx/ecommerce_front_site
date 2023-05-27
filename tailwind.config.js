@@ -1,5 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   content: [
     './components/**/*.{js,vue,ts}',
     './layouts/**/*.vue',
@@ -11,7 +14,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'active-color': 'var(--active-color)'
+        'color-primary': 'var(--color-primary)'
       }
     }
   },

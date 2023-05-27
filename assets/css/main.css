@@ -2,15 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-
-@layer base {
-	:root {
-		--active-color: #4d1939
-	}
+:root {
+	--color-primary: #4d1939;
 }
 
 span.flicking-pagination-bullet-active {
 	background-color: #a99e73;
 	width: 10px;
 	height: 10px;
+}
+
+
+.nav-active {
+	background-color: #4d1939;
+	color: white;
 }

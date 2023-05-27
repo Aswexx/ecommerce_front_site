@@ -1,9 +1,17 @@
 <script setup lang="ts">
+import { useUserStore } from '@/stores/user'
 const supabase = useSupabaseClient()
 const user = useSupabaseUser()
 
 const searchInput = ref<HTMLInputElement>()
 const searchOpened = ref(false)
+
+const isSmallScreen = computed(() => {
+  return useUserStore().viewportWidth < 640
+})
+
+const menuOpened = ref(false)
+
 
 function toggleSearch() {
   searchOpened.value = !searchOpened.value
@@ -62,18 +70,36 @@ async function logout() {
       />
     </div>
 
-    <div class="group">
+    <div class="group" v-if="!isSmallScreen">
       <Icon class="cursor-pointer" name="iconamoon:profile-light" size="32" color="#C3AE8B" />
       <ul
         class="absolute right-10 z-20 overflow-hidden rounded-lg bg-[#F1EDEF] opacity-0 transition-opacity duration-1000 group-hover:opacity-100"
       >
-        <li @click="login" class="cursor-pointer px-4 py-1 hover:bg-[#4d1939] hover:text-[#ffffff]">
+        <li @click="login" class="cursor-pointer px-4 py-1 hover:bg-color-primary hover:text-[#ffffff]">
           {{ user ? '個人頁面' : 'Google 登入' }}
         </li>
-        <li class="cursor-pointer px-4 py-1 hover:bg-[#4d1939] hover:text-[#ffffff]">
+        <li class="cursor-pointer px-4 py-1 hover:bg-color-primary hover:text-[#ffffff]">
           未註冊帳號訂單查詢
         </li>
-        <li v-if="user" @click="logout" class="cursor-pointer px-4 py-1 hover:bg-[#4d1939] hover:text-[#ffffff]">
+        <li v-if="user" @click="logout" class="cursor-pointer px-4 py-1 hover:bg-color-primary hover:text-[#ffffff]">
+          登出
+        </li>
+
+      </ul>
+    </div>
+
+    <div class="group" v-else>
+      <Icon @click="menuOpened = !menuOpened" class="cursor-pointer" name="iconamoon:profile-light" size="32" color="#C3AE8B" />
+      <ul v-show="menuOpened"
+        class="absolute right-10 z-20 overflow-hidden rounded-lg bg-[#F1EDEF]"
+      >
+        <li @click="login" class="cursor-pointer px-4 py-1 hover:bg-color-primary hover:text-[#ffffff]">
+          {{ user ? '個人頁面' : 'Google 登入' }}
+        </li>
+        <li class="cursor-pointer px-4 py-1 hover:bg-color-primary hover:text-[#ffffff]">
+          未註冊帳號訂單查詢
+        </li>
+        <li v-if="user" @click="logout" class="cursor-pointer px-4 py-1 hover:bg-color-primary hover:text-[#ffffff]">
           登出
         </li>
 
