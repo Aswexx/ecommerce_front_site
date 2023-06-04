@@ -9,6 +9,7 @@ const popularProducts = computed(() => {
   return productStore.products.filter(p => p.isPopular)
 })
 
+
 if (process.server) {
   await productStore.getProducts()
 }
@@ -23,7 +24,6 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  alert('unmounted')
   window.removeEventListener('resize', handleResize)
 })
 

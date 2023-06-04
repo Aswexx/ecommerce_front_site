@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 const user = useSupabaseUser()
 
+onMounted(async () => {
+	alert('profile')
+})
 </script>
 
 <template>

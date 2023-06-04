@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useUserStore } from '@/stores/user'
-const supabase = useSupabaseClient()
 const user = useSupabaseUser()
+const supabase = useSupabaseClient()
 
 const searchInput = ref<HTMLInputElement>()
 const searchOpened = ref(false)
@@ -11,7 +11,6 @@ const isSmallScreen = computed(() => {
 })
 
 const menuOpened = ref(false)
-
 
 function toggleSearch() {
   searchOpened.value = !searchOpened.value
@@ -24,30 +23,33 @@ function toggleSearch() {
 
 async function login() {
   if (user.value) return navigateTo('/profile')
+  
   const baseUrl = useRuntimeConfig().public.HOST_URL
   const { error } = await supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: {
-      redirectTo: `${baseUrl}/profile`
-    }
+    provider: 'google'
+    // options: {
+    //   redirectTo: `${baseUrl}/profile`
+    // }
   })
+
 
   if (error) {
     return console.error(error)
   }
+
+  // TODO: toast 提示登入成功
+  alert('登入成功')
 }
 
 async function logout() {
-	const supabase = useSupabaseClient()
-	const { error } = await supabase.auth.signOut()
+  const { error } = await supabase.auth.signOut()
 
 	if (error) {
 		return console.error(error)
 	}
 
-	navigateTo('/')
+  navigateTo('/')
 }
-
 </script>
 
 <template>

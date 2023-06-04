@@ -9,7 +9,11 @@ export default defineNuxtConfig({
     }
   },
   build: {
-    transpile: ['@headlessui/vue', '@headlessui/tailwindcss']
+    transpile: [
+      '@headlessui/vue',
+      '@headlessui/tailwindcss',
+      '@vuepic/vue-datepicker'
+    ]
   },
   unlazy: {
     ssr: false
