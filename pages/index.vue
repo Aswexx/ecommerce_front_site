@@ -32,7 +32,11 @@ onUnmounted(() => {
   <NuxtLayout>
     <section class="main space-y-10 pt-4">
       <CarouselHero />
-      <IntroTitle />
+      <IntroTitle 
+        :title="'熱銷推薦'"
+        :sub-title="'most popular'"
+        :description="'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, ratione?'"
+      />
       <CarouselProducts :products="popularProducts"/>
       <Hero />
     </section>

@@ -1,13 +1,16 @@
 <script lang="ts" setup>
-import { useProductStore } from '@/stores/product'
-const { currentPageNum, pagedProducts, numOfPages } = usePagination(useProductStore().products)
+const { categoryId, categoryName } = useRoute().params
+const { data } = await useFetch(`/api/products/category/${categoryId}`)
+const categoryProduct = data.value || []
+const { currentPageNum, pagedProducts, numOfPages } = usePagination(categoryProduct)
+
 </script>
 
 <template>
   <div class="border border-blue-400 flex flex-col items-center">
     <IntroTitle
       class="self-stretch"
-      :title="'所有商品'"
+      :title="categoryName"
     />
 
     <div class="flex-1 border border-red-400 grid grid-cols-2 gap-1 sm:grid-cols-4 ">

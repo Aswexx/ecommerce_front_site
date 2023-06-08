@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { useUserStore } from '@/stores/user'
+import { useProductStore } from '@/stores/product'
+
+const cartItemCount = computed(() => useProductStore().cartItems.length)
+
 const user = useSupabaseUser()
 const supabase = useSupabaseClient()
 
@@ -108,12 +112,12 @@ async function logout() {
       </ul>
     </div>
 
-    <div class="relative">
+    <div class="relative" @click="navigateTo('/cart')">
       <Icon class="cursor-pointer" name="ph:shopping-cart-simple" size="32" color="#C3AE8B" />
       <div
         class="absolute -right-2 -top-1 flex h-[15px] w-[15px] items-center justify-center rounded-full bg-[#a40001] p-2 text-xs text-white"
       >
-        <span>1</span>
+        <span>{{ cartItemCount }}</span>
       </div>
     </div>
   </div>

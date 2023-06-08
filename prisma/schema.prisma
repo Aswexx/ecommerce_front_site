@@ -15,6 +15,7 @@ model Product {
   price         Int
   stock         Int
   isPopular     Boolean   @map("is_popular")
+  description   String?   @db.VarChar(100)
   features      String[]
   createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamp
   updatedAt     DateTime  @updatedAt @map("updated_at") @db.Timestamp
@@ -52,7 +53,7 @@ model Favorite {
   user   User   @relation(fields: [userId], references: [id])
   userId String @map("user_id")
 
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String  @map("product_id")
 
   @@unique([userId, productId])

@@ -1,8 +1,12 @@
 <script lang="ts" setup>
+import { useProductStore } from '@/stores/product'
+const { addToCart } = useProductStore()
+
 const user = useSupabaseUser()
 const { product } = defineProps<{ product: Product, featureIcon: boolean }>()
-function showDetail() {
-  alert('hello')
+function showDetail(productId: string) {
+	alert('hello')
+	navigateTo(`/shops/${productId}`)
 }
 
 async function addToFav() {
@@ -24,9 +28,9 @@ async function addToFav() {
 	alert('加到最愛')
 }
 
-function addToCart() {
-	alert('加到購物車')
-}
+// function addToCart() {
+// 	alert('加到購物車')
+// }
 
 </script>
 
@@ -36,7 +40,7 @@ function addToCart() {
 		class="group mb-10 flex cursor-pointer flex-col items-center justify-center
 			hover:translate-y-[-10px] transition duration-300
 		"
-		@click="showDetail"
+		@click="showDetail(product.id)"
 	>
 		<div class="relative">
 			<UnLazyImage class="mx-5 w-[150px] h-[150px] object-cover" :blurhash="`L6PZfSi_.AyE_3t7t7R**0o#DgR4`" :src="product.imageUrl" />
@@ -44,7 +48,13 @@ function addToCart() {
 				<span class="bg-color-primary px-2" @click.stop="addToFav">
 					<Icon class="cursor-pointer" name="material-symbols:heart-plus-outline" size="32" color="#C3AE8B" />
 				</span>
-				<span class="bg-color-primary px-2" @click.stop="addToCart">
+				<span class="bg-color-primary px-2" @click.stop="addToCart({
+					id: product.id,
+					name: product.name,
+					price: product.price,
+					imageUrl: product.imageUrl,
+					count: 1
+				})">
 					<Icon class="cursor-pointer" name="ph:shopping-cart-simple" size="32" color="#C3AE8B" />
 				</span>
 			</div>

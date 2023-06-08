@@ -10,6 +10,7 @@ declare global {
 		price: number
 		stock: number
 		isPopular: boolean
+		description: string
 		features: string[]
 	}
 
@@ -22,4 +23,12 @@ declare global {
 		phone: string
 		subscription: boolean
 	}
+
+	interface CartItem {
+    id: string
+    name: string
+    imageUrl: string
+		price: number
+		count: number
+  }
 }
