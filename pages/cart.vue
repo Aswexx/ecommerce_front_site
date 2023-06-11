@@ -24,6 +24,51 @@ const summaryItems = computed(() => {
 	]
 })
 
+const deliveryInfo = reactive({
+	email: '',
+	name: '',
+	phone: '',
+	city: '',
+	address: ''
+})
+
+function checkOut() {
+	console.log('checkout', deliveryInfo)
+	// validate delivery information
+	const deliveryInfoToSubmit = {
+		email: deliveryInfo.email,
+		name: deliveryInfo.name,
+		phone: deliveryInfo.phone,
+		address: `${deliveryInfo.city}${deliveryInfo.address}`
+	}
+
+	// const { error } = useDataValidate('delivery', deliveryInfoToSubmit)
+
+	// if (error) {
+	// 	console.log('xx', error)
+	// 	return
+	// }
+
+	const order = {
+		...deliveryInfoToSubmit,
+		contents: cartItems.map(item => {
+			return {
+				name: item.name,
+				count: item.count
+			}
+		}),
+		total: summaryItems.value[2].fee
+	}
+
+	console.log('order', order)
+
+	// create order
+}
+
+function handleCitySelect(selectedCity: string) {
+	deliveryInfo.city = selectedCity
+}
+
 function handleCount(currentCount: number, productId: string) {
 	cartItems.some((item, index) => {
 		if (item.id === productId) {
@@ -43,9 +88,7 @@ function removeItem(productId: string) {
 <template>
 	<NuxtLayout>
 		<div class="flex-1 flex flex-col items-center p-4">
-			<h1>Cart</h1>
-			<h1>{{ cartItems }}</h1>
-
+			<!-- table -->
 			<div class="overflow-x-auto">
 				<table class="table">
 					<!-- head -->
@@ -58,7 +101,7 @@ function removeItem(productId: string) {
 						</tr>
 					</thead>
 					<tbody>
-						<!-- row 1 -->
+						<!-- row -->
 						<tr v-for="item in cartItems" :key="item.id">
 							<td>
 								<div class="flex items-center space-x-3">
@@ -91,6 +134,7 @@ function removeItem(productId: string) {
 				</table>
 			</div>
 
+			<!-- summary -->
 			<ul class="border border-red-400 w-3/5">
 				<li class="border-b border-dotted border-gray-500 py-2 flex justify-between"
 					v-for="item in summaryItems" :key="item.title"
@@ -99,6 +143,47 @@ function removeItem(productId: string) {
 					<span class="text-red-500">$ {{ item.fee }}</span>
 				</li>
 			</ul>
+
+			<!-- delivery info -->
+			<div class="w-full">
+				<h2 class="border-b border-black">商品收件資訊</h2>
+				<div class="form-control w-full max-w-xs">
+					<label class="label">
+						<span class="label-text">Email</span>
+					</label>
+					<input type="text" placeholder="輸入訂單資訊收件email" 
+						class="input input-bordered input-primary input-sm w-full max-w-xs"
+						v-model="deliveryInfo.email"
+					/>
+
+					<label class="label">
+						<span class="label-text">收件人姓名</span>
+					</label>
+					<input type="text" placeholder="輸入收件人姓名" 
+						class="input input-bordered input-sm w-full max-w-xs"
+						v-model="deliveryInfo.name"
+					/>
+
+					<label class="label">
+						<span class="label-text">聯絡手機</span>
+					</label>
+					<input type="text" placeholder="輸入收件人聯絡手機" 
+						class="input input-bordered input-sm w-full max-w-xs"
+						v-model="deliveryInfo.phone"
+					/>
+
+					<label class="label">
+						<span class="label-text">地址</span>
+					</label>
+					<CitySelect @city-select="handleCitySelect"/>
+					<input type="text" placeholder="輸入收件地址" 
+						class="input input-bordered input-sm w-full max-w-xs"
+						v-model="deliveryInfo.address"
+					/>
+				</div>
+			</div>
+
+			<button class="btn btn-primary" @click="checkOut">送出訂單</button>
 
 		</div>
 	</NuxtLayout>

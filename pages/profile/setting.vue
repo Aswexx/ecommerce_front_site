@@ -77,10 +77,7 @@ async function handleSubmit() {
 		phone: profileToUpdate.phone
 	}
 
-	const { error } = useProfileValidate(profileToSubmit)
-
-	console.log(profile.value)
-	console.log(profileToSubmit)
+	const { error } = useDataValidate('profile', profileToSubmit)
 
 	if (error) {
 		//TODO: 依照 key 給予對應提示 toast 內容
