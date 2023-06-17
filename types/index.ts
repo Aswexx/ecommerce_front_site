@@ -27,7 +27,8 @@ declare global {
 	interface CartItem {
     id: string
     name: string
-    imageUrl: string
+		imageUrl: string
+		stock: number
 		price: number
 		count: number
   }

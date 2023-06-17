@@ -32,7 +32,18 @@ const deliveryInfo = reactive({
 	address: ''
 })
 
-function checkOut() {
+const payInfo = reactive({
+	MerchantID: '',
+	TradeInfo: '',
+	TradeSha: '',
+	Version: '2.0',
+	TokenTerm: '',
+	TokenTermDemand: 1
+})
+
+const payForm = ref<HTMLFormElement>()
+
+async function checkOut() {
 	console.log('checkout', deliveryInfo)
 	// validate delivery information
 	const deliveryInfoToSubmit = {
@@ -60,9 +71,20 @@ function checkOut() {
 		total: summaryItems.value[2].fee
 	}
 
-	console.log('order', order)
+	// create order and get encrypted trade info from backend
+	const { data } = await useFetch('/api/checkout', {
+		method: 'post',
+		body: order
+	})
 
-	// create order
+	payInfo.MerchantID = data.value!.MerchantID
+	payInfo.TradeInfo = data.value!.tradeInfo
+	payInfo.TradeSha = data.value!.sha
+	payInfo.TokenTerm = deliveryInfo.email
+
+	nextTick(() => {
+		payForm.value?.submit()
+	})
 }
 
 function handleCitySelect(selectedCity: string) {
@@ -89,7 +111,7 @@ function removeItem(productId: string) {
 	<NuxtLayout>
 		<div class="flex-1 flex flex-col items-center p-4">
 			<!-- table -->
-			<div class="overflow-x-auto">
+			<div class="flex flex-col mb-4 overflow-x-auto">
 				<table class="table">
 					<!-- head -->
 					<thead>
@@ -118,6 +140,7 @@ function removeItem(productId: string) {
 							<td>
 								<Counter
 									:init-count="item.count"
+									:max-count="item.stock"
 									:product-id="item.id"
 									:button-styles="'btn-xs'"
 									@count="handleCount"
@@ -132,22 +155,27 @@ function removeItem(productId: string) {
 						</tr>
 					</tbody>
 				</table>
+				
+				<!-- summary -->
+				<ul class="w-full sm:w-1/2 self-center sm:self-end">
+					<li class="border-b border-dotted border-gray-500 pl-10 py-2 flex justify-between"
+						v-for="item in summaryItems" :key="item.title"
+					>
+						<span class="">{{ item.title }}:</span>
+						<span class="text-red-500">$ {{ item.fee }}</span>
+					</li>
+				</ul>
+
 			</div>
 
-			<!-- summary -->
-			<ul class="border border-red-400 w-3/5">
-				<li class="border-b border-dotted border-gray-500 py-2 flex justify-between"
-					v-for="item in summaryItems" :key="item.title"
-				>
-					<span class="pl-48">{{ item.title }}:</span>
-					<span class="text-red-500">$ {{ item.fee }}</span>
-				</li>
-			</ul>
-
 			<!-- delivery info -->
-			<div class="w-full">
-				<h2 class="border-b border-black">商品收件資訊</h2>
-				<div class="form-control w-full max-w-xs">
+			<div class="w-full sm:w-2/5 flex flex-col space-y-2">
+				<h2 class="border-b border-black text-center">商品收件資訊</h2>
+				<div class="self-end flex items-center text-xs">
+					<Icon class="cursor-pointer" name="material-symbols:edit-note-rounded" size="20" color="#C3AE8B"/>
+					<span>帶入註冊帳號資料</span>
+				</div>
+				<div class="mx-auto form-control w-full max-w-xs">
 					<label class="label">
 						<span class="label-text">Email</span>
 					</label>
@@ -160,7 +188,7 @@ function removeItem(productId: string) {
 						<span class="label-text">收件人姓名</span>
 					</label>
 					<input type="text" placeholder="輸入收件人姓名" 
-						class="input input-bordered input-sm w-full max-w-xs"
+						class="input input-bordered input-primary input-sm w-full max-w-xs"
 						v-model="deliveryInfo.name"
 					/>
 
@@ -168,23 +196,45 @@ function removeItem(productId: string) {
 						<span class="label-text">聯絡手機</span>
 					</label>
 					<input type="text" placeholder="輸入收件人聯絡手機" 
-						class="input input-bordered input-sm w-full max-w-xs"
+						class="input input-bordered input-primary input-sm w-full max-w-xs"
 						v-model="deliveryInfo.phone"
 					/>
 
 					<label class="label">
-						<span class="label-text">地址</span>
+						<span class="label-text">收件地址</span>
 					</label>
-					<CitySelect @city-select="handleCitySelect"/>
+					<CitySelect class="mb-2" @city-select="handleCitySelect"/>
 					<input type="text" placeholder="輸入收件地址" 
-						class="input input-bordered input-sm w-full max-w-xs"
+						class="input input-bordered input-primary input-sm w-full max-w-xs"
 						v-model="deliveryInfo.address"
 					/>
 				</div>
+				<button class="btn btn-primary self-center" @click="checkOut">送出訂單</button>
 			</div>
 
-			<button class="btn btn-primary" @click="checkOut">送出訂單</button>
 
 		</div>
+
+		<!-- pay form -->
+		<form class="hidden" :action="useRuntimeConfig().public.PAY_URL" ref="payForm" method="post">
+			<input type="text" 
+				name="MerchantID" :value="payInfo.MerchantID"
+			>
+			<input type="text" 
+				name="TradeInfo" :value="payInfo.TradeInfo"
+			>
+			<input type="text" 
+				name="TradeSha" :value="payInfo.TradeSha"
+			>
+			<input type="text" 
+				name="Version" :value="payInfo.Version"
+			>
+			<input type="text" 
+				name="TokenTerm" :value="payInfo.TokenTerm"
+			>
+			<input type="text" 
+				name="TokenTermDemand" :value="payInfo.TokenTermDemand"
+			>
+		</form>
 	</NuxtLayout>
 </template>

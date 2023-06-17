@@ -58,3 +58,12 @@ model Favorite {
 
   @@unique([userId, productId])
 }
+
+model News {
+  id        String   @id @default(cuid())
+  title     String   @db.VarChar(20)
+  content   String   @db.VarChar(200)
+  imageUrl  String   @map("image_url")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamp
+}

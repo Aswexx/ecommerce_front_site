@@ -266,11 +266,39 @@ function getRandomElements(baseArr: string[], numOfElements: number) {
   return pickedElements
 }
 
+async function addFakeNews() {
+  const news = [
+    {
+      title: '多款歐式麵包新上架!',
+      content:
+        '品味歐陸風情，我們自豪地宣布推出全新的歐式麵包系列！每款麵包都將帶給您最細膩的口感和美妙的味道。選用新鮮食材烘焙而成，您可以品嚐到最優質的原料。每一口都彷彿帶領您漫遊於歐洲的街頭小麵包店，讓您的味蕾獲得一次奇妙的旅程。',
+      imageUrl: 'https://source.unsplash.com/Emhz3miT6mo'
+    },
+    {
+      title: '精緻點心上架!',
+      content:
+        '我們驕傲地宣布推出嶄新的精緻點心系列！這些迷人的點心以精湛的工藝和豐富的口味為您帶來無限的驚喜。無論您是享受獨自一人的時光還是與摯愛分享，這些點心都能帶給您愉悅和滿足感。我們精心挑選了每一道點心的材料，確保它們的新鮮和高品質。讓我們的精緻點心成為您品味生活的絕佳選擇。',
+      imageUrl: 'https://source.unsplash.com/r0DusB-OgRM'
+    },
+    {
+      title: '多款手工餅乾上架!',
+      content:
+        '我們推出了全新的手工餅乾系列！每一片餅乾完全不含任何人工添加物。使用新鮮的食材和傳統的烘焙方法，確保每一塊餅乾都散發出迷人的香氣和口感。從酥脆的牛油餅乾到濃郁的巧克力餅乾，我們的手工餅乾系列滿足各種味蕾的喜好。品味這些美味的餅乾，讓您感受到細膩的手工工藝和獨特的風味。',
+      imageUrl: 'https://source.unsplash.com/dZKiXR9FYcM'
+    }
+  ]
+
+  await prisma.news.createMany({
+    data: news
+  })
+}
+
 
 export default defineEventHandler(async (event) => {
   try {
     // await deleteProducts()
     // await addFakeProducts()
+    // const news = addFakeNews()
     return { success: getFakeProducts() }
   } catch (e) {
     console.log(e)

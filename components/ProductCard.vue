@@ -53,6 +53,7 @@ async function addToFav() {
 					name: product.name,
 					price: product.price,
 					imageUrl: product.imageUrl,
+					stock: product.stock,
 					count: 1
 				})">
 					<Icon class="cursor-pointer" name="ph:shopping-cart-simple" size="32" color="#C3AE8B" />
