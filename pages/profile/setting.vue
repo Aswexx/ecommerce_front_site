@@ -80,8 +80,8 @@ async function handleSubmit() {
 	const { error } = useDataValidate('profile', profileToSubmit)
 
 	if (error) {
-		//TODO: 依照 key 給予對應提示 toast 內容
-		console.log(error.details[0].context?.key, error.message)
+		//TODO: 處理資料錯誤提示
+		console.log(error.message)
 		return
 	}
 

@@ -44,7 +44,6 @@ const payInfo = reactive({
 const payForm = ref<HTMLFormElement>()
 
 async function checkOut() {
-	console.log('checkout', deliveryInfo)
 	// validate delivery information
 	const deliveryInfoToSubmit = {
 		email: deliveryInfo.email,
@@ -53,12 +52,12 @@ async function checkOut() {
 		address: `${deliveryInfo.city}${deliveryInfo.address}`
 	}
 
-	// const { error } = useDataValidate('delivery', deliveryInfoToSubmit)
+	const { error } = useDataValidate('delivery', deliveryInfoToSubmit)
 
-	// if (error) {
-	// 	console.log('xx', error)
-	// 	return
-	// }
+	if (error) {
+		// TODO: 資料有誤提示
+		return
+	}
 
 	const order = {
 		...deliveryInfoToSubmit,

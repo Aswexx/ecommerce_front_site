@@ -67,3 +67,13 @@ model News {
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamp
 }
+
+model Contact {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @db.VarChar(50)
+  phone     String   @db.VarChar(20)
+  type      String   @db.VarChar(10)
+  content   String   @db.VarChar(400)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp
+}
