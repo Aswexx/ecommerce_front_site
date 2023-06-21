@@ -21,9 +21,9 @@ const tabListStyles = {
 </script>
 
 <template>
-  <div class="relative flex items-center justify-between border border-blue-300 bg-[#F1EDEF] px-4">
+  <div class="relative flex items-center justify-between bg-[#F1EDEF] px-4">
     <div class="logo cursor-pointer" @click="navigateTo('/')">
-      <img class="w-[55px]" src="@/assets/images/logo.svg" />
+      <img class="w-[55px]" src="@/assets/images/bakerylogo.jfif" />
     </div>
 
     <NavTabs :tabs="tabs" :styles="tabListStyles" />

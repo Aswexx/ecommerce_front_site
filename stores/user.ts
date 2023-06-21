@@ -12,6 +12,18 @@ export const useUserStore = defineStore('user', () => {
     }
   )
 
+  const interactAlerts = reactive<{ type: string, content: string}[]>([
+  ])
+
+  watch(interactAlerts, (newVal) => {
+    if (newVal.length) {
+      setTimeout(() => {
+        interactAlerts.shift()
+      }, 2000)
+    }
+  })
+
+
   async function upsertUser() {
     const userInfo = await useFetch('/api/users', {
       method: 'post',
@@ -23,5 +35,5 @@ export const useUserStore = defineStore('user', () => {
     console.log(userInfo)
   }
 
-  return { viewportWidth, user }
+  return { viewportWidth, user, interactAlerts }
 })

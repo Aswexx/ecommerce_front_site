@@ -17,7 +17,8 @@ module.exports = {
         'color-primary': 'var(--color-primary)'
       },
       aspectRatio: {
-        '4/3': '4/3'
+        '4/3': '4/3',
+        '5/1.75': '5/1.75'
       }
     }
   },

@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-center space-y-2 bg-[#F1EDEF] py-1 font-bold sm:block sm:py-4">
     <div class="w-full">
-      <img class="mx-auto aspect-[4/3] h-[50px]" src="@/assets/images/logo.svg" />
+      <img class="mx-auto aspect-[4/3] h-[50px]" src="@/assets/images/bakerylogo.jfif" />
     </div>
 
     <div class="flex flex-col justify-center text-center sm:flex-row sm:space-x-5">

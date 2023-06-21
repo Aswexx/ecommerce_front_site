@@ -4,10 +4,9 @@ import { AutoPlay, Pagination } from '@egjs/flicking-plugins'
 import '@egjs/flicking-plugins/dist/pagination.css'
 
 const images = [
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAGV3qKodgoLi7b8S3BW4LS7jdVcgKsjpiHj7clB7FY0fMpBYqAbYpKuxK7eGvURcFmV0&usqp=CAU',
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcSXaEb5ctKtE6R1qDodiP0CEP20Xqfw7BtqZZbtN1oswvukde-OJbr48W6JSwebyrF5c&usqp=CAU',
-  'https://media.istockphoto.com/id/1403500817/photo/the-craggies-in-the-blue-ridge-mountains.jpg?b=1&s=612x612&w=0&k=20&c=oPozX-rSN1bsabrtN3fTPFbzXLaD2RgnGPR6Y2bta-0=',
-  'http://localhost:3000/_nuxt/assets/images/view3.jpg'
+  'https://source.unsplash.com/Emhz3miT6mo',
+  'https://source.unsplash.com/r0DusB-OgRM',
+  'https://source.unsplash.com/dZKiXR9FYcM'
 ]
 
 const plugins = [
@@ -27,7 +26,7 @@ const plugins = [
       :key="idx"
       class="mb-10 flex cursor-pointer flex-col items-center justify-center"
     >
-      <img class="mx-5 w-[500px]" :src="img" />
+      <img class="mx-5 w-full aspect-5/1.75 object-cover" :src="img" />
     </div>
     <template #viewport>
       <div class="flicking-pagination"></div>

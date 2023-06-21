@@ -3,11 +3,16 @@ import { useUserStore } from '@/stores/user'
 import { useProductStore } from '@/stores/product'
 
 const cartItemCount = computed(() => useProductStore().cartItems.length)
+const searchedProducts = computed(() => {
+  if (!keyword.value) return []
+  return useProductStore().products.filter(p => p.name.includes(keyword.value))
+})
 
 const user = useSupabaseUser()
 const supabase = useSupabaseClient()
 
 const searchInput = ref<HTMLInputElement>()
+const keyword = ref('')
 const searchOpened = ref(false)
 
 const isSmallScreen = computed(() => {
@@ -54,6 +59,22 @@ async function logout() {
 
   navigateTo('/')
 }
+
+function closeSearchDiv(e: MouseEvent) {
+  const targetElement = e.target as HTMLElement
+  console.log('id:', targetElement.id)
+  if (targetElement.id === 'search-icon') return
+  searchOpened.value = false
+}
+
+onMounted(() => {
+  document.addEventListener('click', closeSearchDiv)
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', closeSearchDiv)
+})
+
 </script>
 
 <template>
@@ -67,13 +88,29 @@ async function logout() {
         color="#C3AE8B"
         @click="toggleSearch"
       />
-      <input
-        v-show="searchOpened"
-        ref="searchInput"
-        class="absolute right-20 top-10 z-10 border border-b-[#C3AE8B] bg-[#F1EDEF] p-2 outline-none"
-        type="text"
-        @blur="searchOpened = false"
-      />
+      <div class="p-2 rounded-lg flex flex-col items-center bg-[#F1EDEF] absolute right-20 top-10 z-30" v-show="searchOpened">
+        <input
+          ref="searchInput"
+          class=" border border-b-[#C3AE8B] bg-[#F1EDEF] p-2 outline-none"
+          type="text"
+          placeholder="輸入品名關鍵字"
+          v-model="keyword"
+        />
+        
+        <ul class="max-h-[60dvh] overflow-auto space-y-2"
+        >
+          <span v-show="!searchedProducts.length">沒有符合的商品</span>
+          <ProductListItem
+            class="cursor-pointer pb-2"
+            v-for="product in searchedProducts" :key="product.id"
+            :name="product.name"
+            :image-url="product.imageUrl"
+            @click="navigateTo(`/shops/${product.id}`)"
+          />
+        </ul>
+        <button class="btn w-full btn-sm">關閉</button>
+        
+      </div>
     </div>
 
     <div class="group" v-if="!isSmallScreen">

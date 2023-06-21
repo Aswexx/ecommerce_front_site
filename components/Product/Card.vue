@@ -28,9 +28,17 @@ async function addToFav() {
 	alert('加到最愛')
 }
 
-// function addToCart() {
-// 	alert('加到購物車')
-// }
+function addOneToCart() {
+	useToast('alert-success', `已新增${product.name} 1 個至購物車`)
+	addToCart({
+		id: product.id,
+		name: product.name,
+		price: product.price,
+		imageUrl: product.imageUrl,
+		stock: product.stock,
+		count: 1
+	})
+}
 
 </script>
 
@@ -48,14 +56,7 @@ async function addToFav() {
 				<span class="bg-color-primary px-2" @click.stop="addToFav">
 					<Icon class="cursor-pointer" name="material-symbols:heart-plus-outline" size="32" color="#C3AE8B" />
 				</span>
-				<span class="bg-color-primary px-2" @click.stop="addToCart({
-					id: product.id,
-					name: product.name,
-					price: product.price,
-					imageUrl: product.imageUrl,
-					stock: product.stock,
-					count: 1
-				})">
+				<span class="bg-color-primary px-2" @click.stop="addOneToCart">
 					<Icon class="cursor-pointer" name="ph:shopping-cart-simple" size="32" color="#C3AE8B" />
 				</span>
 			</div>
