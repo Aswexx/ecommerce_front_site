@@ -5,7 +5,6 @@ const { addToCart } = useProductStore()
 const user = useSupabaseUser()
 const { product } = defineProps<{ product: Product, featureIcon: boolean }>()
 function showDetail(productId: string) {
-	alert('hello')
 	navigateTo(`/shops/${productId}`)
 }
 

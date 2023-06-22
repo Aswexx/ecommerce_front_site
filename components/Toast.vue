@@ -18,6 +18,11 @@ const { interactAlerts } = useUserStore()
         name="radix-icons:cross-circled" size="24" color="#a60717"
       />
 
+      <Icon
+        v-else-if="alert.type === 'alert-info'"
+        name="bi:exclamation-circle" size="24" color="#1136ee"
+      />
+
       <span>{{ alert.content }}</span>
     </div>
   </div>

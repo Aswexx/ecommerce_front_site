@@ -50,6 +50,13 @@ async function login() {
   alert('登入成功')
 }
 
+function navToCartPage() {
+  if (!cartItemCount.value) {
+    return useToast('alert-info', '購物車是空的，請先選購商品!')
+  }
+  navigateTo('/cart')
+}
+
 async function logout() {
   const { error } = await supabase.auth.signOut()
 
@@ -149,7 +156,7 @@ onBeforeUnmount(() => {
       </ul>
     </div>
 
-    <div class="relative" @click="navigateTo('/cart')">
+    <div class="relative" @click="navToCartPage">
       <Icon class="cursor-pointer" name="ph:shopping-cart-simple" size="32" color="#C3AE8B" />
       <div
         class="absolute -right-2 -top-1 flex h-[15px] w-[15px] items-center justify-center rounded-full bg-[#a40001] p-2 text-xs text-white"

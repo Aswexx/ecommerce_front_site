@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import  { useProductStore }  from '@/stores/product'
 const { cartItems } = useProductStore()
+const userId = useSupabaseUser().value?.id
 
 const deliveryFee = 90
 const summaryItems = computed(() => {
@@ -82,9 +83,27 @@ async function checkOut() {
   payInfo.TradeSha = data.value!.sha
   payInfo.TokenTerm = deliveryInfo.email
 
-  // nextTick(() => {
-  //   payForm.value?.submit()
-  // })
+  nextTick(() => {
+    payForm.value?.submit()
+  })
+}
+
+watch(cartItems, (newVal) => {
+  if (newVal.length) return
+  useToast('alert-info', '購物車已清空，再看看要挑什麼吧!')
+  navigateTo('/shops')
+})
+
+const citySelect = ref<{selectedCity: string}>()
+async function importUserInfo() {
+  const { data: userInfo } = await useFetch(`/api/users/${userId}`)
+  if (userInfo.value) {
+    deliveryInfo.email = userInfo.value.email
+    deliveryInfo.name = userInfo.value.name || ''
+    deliveryInfo.phone = userInfo.value.phone || ''
+    deliveryInfo.address = userInfo.value.address?.substring(3) || ''
+    citySelect.value!.selectedCity = userInfo.value.address?.substring(0, 3) || ''
+  }
 }
 
 function handleCitySelect(selectedCity: string) {
@@ -165,10 +184,14 @@ function removeItem(productId: string) {
       <!-- delivery info -->
       <div class="w-full sm:w-2/5 flex flex-col space-y-2">
         <h2 class="border-b border-black text-center">商品收件資訊</h2>
-        <div class="self-end flex items-center text-xs">
-          <Icon class="cursor-pointer" name="material-symbols:edit-note-rounded" size="20" color="#C3AE8B"/>
+
+        <div v-if="userId" class="cursor-pointer self-end flex items-center text-xs"
+          @click="importUserInfo"
+        >
+          <Icon name="material-symbols:edit-note-rounded" size="20" color="#C3AE8B"/>
           <span>帶入註冊帳號資料</span>
         </div>
+
         <div class="mx-auto form-control w-full max-w-xs">
           <label class="label">
             <span class="label-text">Email</span>
@@ -197,7 +220,7 @@ function removeItem(productId: string) {
           <label class="label">
             <span class="label-text">收件地址</span>
           </label>
-          <CitySelect class="mb-2" @city-select="handleCitySelect"/>
+          <CitySelect ref="citySelect" class="mb-2" @city-select="handleCitySelect"/>
           <input type="text" placeholder="輸入收件地址" 
             class="input input-bordered input-primary input-sm w-full max-w-xs"
             v-model="deliveryInfo.address"

@@ -55,8 +55,12 @@ export default function useDataValidate(formType: FormType, data: object) {
       name: validateProps.name,
       phone: validateProps.phone,
       email: validateProps.email,
-      type: Joi.string().required(),
-      content: Joi.string().required()
+      type: Joi.string().required().messages({
+        'string.empty': '請選擇聯絡項目'
+      }),
+      content: Joi.string().required().messages({
+        'string.empty': '內容不能為空'
+      })
     })
   }
   

@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+const userId = useSupabaseUser().value?.id
+
 const contactInfo = reactive({
   name: '',
   phone: '',
@@ -19,8 +21,7 @@ async function submitContactInfo() {
   const { error } = useDataValidate('contact', contactInfo)
 
 	if (error) {
-		// TODO: 資料有誤提示
-    console.log('err', error.message)
+    useToast('alert-error', error.message)
 		return
 	}
 
@@ -29,7 +30,7 @@ async function submitContactInfo() {
     body: contactInfo
   })
 
-  alert('送出!')
+  useToast('alert-success', '已收到您的訊息!')
   window.location.reload()
 }
 
@@ -39,6 +40,16 @@ function clearContactInfo() {
     contactInfo[k as keyof typeof contactInfo] = ''
   })
 }
+
+async function importUserInfo() {
+  const { data: userInfo } = await useFetch(`/api/users/${userId}`)
+  if (userInfo.value) {
+    contactInfo.email = userInfo.value.email
+    contactInfo.name = userInfo.value.name || ''
+    contactInfo.phone = userInfo.value.phone || ''
+  }
+}
+
 </script>
 
 <template>
@@ -47,13 +58,13 @@ function clearContactInfo() {
       <Hero
         :title="'聯絡我們'"
         :content="'我們誠摯期待聆聽您對我們產品的寶貴意見與建議。您的每一個想法都將成為我們不斷改進的動力。'"
-        :img-url="`${useRuntimeConfig().public.HOST_URL}/_nuxt/assets/images/view4.jpg`"
+        :img-url="`https://source.unsplash.com/5Ne6mMQtIdo`"
         :height="'h-[30vh]'"
       />
 
       <div class="bg-[#F1EDEF] my-4 p-4 w-4/5 max-w-[500px] grid grid-cols-2 gap-y-4 justify-items-stretch">
         
-        <div class="pt-2 pr-2 flex items-center text-xs col-span-2 justify-self-end cursor-pointer">
+        <div @click="importUserInfo" class="pt-2 pr-2 flex items-center text-xs col-span-2 justify-self-end cursor-pointer">
           <Icon class="" name="material-symbols:edit-note-rounded" size="20" color="#C3AE8B"/>
           <span>帶入註冊帳號資料</span>
         </div>
@@ -111,8 +122,8 @@ function clearContactInfo() {
           ></textarea>
         </div>
 
-        <div class="col-span-2 justify-self-center">
-          <button class="btn btn-primary" @click="clearContactInfo">清除</button>
+        <div class="col-span-2 justify-self-center space-x-4">
+          <button class="btn" @click="clearContactInfo">清除</button>
           <button class="btn btn-primary" @click="submitContactInfo">送出</button>
         </div>
       </div>

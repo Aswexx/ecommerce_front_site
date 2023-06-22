@@ -42,7 +42,7 @@
     <div class="flex justify-center space-x-2">
       <Icon class="cursor-pointer" name="logos:facebook" size="20" color="#C3AE8B" />
       <Icon class="cursor-pointer" name="skill-icons:instagram" size="20" color="#C3AE8B" />
-      <img class="w-[24px]" src="@/assets/images/line-icon.svg" />
+      <img class="cursor-pointer w-[24px]" src="@/assets/images/line-icon.svg" />
     </div>
   </div>
 </template>

@@ -26,6 +26,10 @@ const taiwanCities = [
 ]
 
 const selectedCity = ref('')
+
+defineExpose({
+  selectedCity
+})
 </script>
 
 <template>

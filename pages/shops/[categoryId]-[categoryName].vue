@@ -7,13 +7,13 @@ const { currentPageNum, pagedProducts, numOfPages } = usePagination(categoryProd
 </script>
 
 <template>
-  <div class="border border-blue-400 flex flex-col items-center">
+  <div class=" flex flex-col items-center">
     <IntroTitle
       class="self-stretch"
       :title="categoryName"
     />
 
-    <div class="flex-1 border border-red-400 grid grid-cols-2 gap-1 sm:grid-cols-4 ">
+    <div class="flex-1 grid grid-cols-2 gap-1 sm:grid-cols-4 ">
       <ProductCard v-for="product in pagedProducts" :key="product.id" 
         :product="product"
         :feature-icon="true"

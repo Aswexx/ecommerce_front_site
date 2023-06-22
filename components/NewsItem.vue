@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { message } = defineProps<{
 	message: {
+		id: string
 		imageUrl: string
 		createdAt: Date
 		title: string
@@ -17,9 +18,9 @@ const showingDate = computed(() => {
 </script>
 
 <template>
-	<div class="w-4/5 flex justify-between cursor-pointer
+	<div class="w-4/5 flex flex-col sm:flex-row justify-between cursor-pointer
 		hover:shadow-lg hover:scale-95 transition duration-500">
-		<UnLazyImage class="w-1/5 aspect-square object-cover rounded-md" :blurhash="`L6PZfSi_.AyE_3t7t7R**0o#DgR4`" 
+		<UnLazyImage class="w-full aspect-video sm:w-1/5 sm:aspect-square object-cover rounded-md" :blurhash="`L6PZfSi_.AyE_3t7t7R**0o#DgR4`" 
 			:src="`${message.imageUrl}`" />
 		<div class="flex flex-col justify-center items-center p-4 pr-0">
 			<div class="text-2xl mb-2">{{ new Date(message.createdAt).getFullYear() }}</div>
