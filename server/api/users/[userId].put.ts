@@ -5,9 +5,6 @@ export default defineEventHandler(async (event) => {
 	const { userId } = event.context.params as { userId: string }
 	const profileToUpdate = await readBody(event)
 
-	console.log(userId, profileToUpdate)
-
-
 	try {
 		const result = await prisma.user.update({
       where: { id: userId },

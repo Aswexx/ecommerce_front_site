@@ -219,9 +219,9 @@ function getFakeProducts() {
 }
 
 const categories = {
-  bread: 'clhzmw2cm00007kt0nnv2ez0x',
-  dessert: 'clhzmw2cm00017kt0dxyl1vj8',
-  cookie: 'clhzmw2cm00027kt0bvy42v25'
+  bread: 'clj82uaof00007kh4cel09i8v',
+  dessert: 'clj82uaof00017kh46gew1ha0',
+  cookie: 'clj82uaof00027kh4va2kb4xj'
 }
 
 async function addFakeProducts() {
@@ -296,6 +296,7 @@ async function addFakeNews() {
 
 export default defineEventHandler(async (event) => {
   try {
+    // await addCategory()
     // await deleteProducts()
     // await addFakeProducts()
     // const news = addFakeNews()

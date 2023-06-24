@@ -31,5 +31,24 @@ declare global {
 		stock: number
 		price: number
 		count: number
-  }
+	}
+	
+	interface Order {
+		id: string
+		createdAt: string
+		progress: string
+		tradeAmount: number
+		recieverName: string
+		recieverAddress: string
+		tradeUserEmail: string
+		tradeUserPhone: string
+		purchase: {
+			count: number
+			product: {
+				name: string
+				imageUrl: string
+				imageBlurHash: string
+			}
+		}[]
+	}
 }

@@ -57,7 +57,6 @@ async function checkOut() {
 
   if (error) {
     useToast('alert-error', error.message)
-    console.log(error)
     return
   }
 
@@ -65,11 +64,14 @@ async function checkOut() {
     ...deliveryInfoToSubmit,
     contents: cartItems.map(item => {
       return {
-        name: item.name,
+        productId: item.id,
         count: item.count
       }
     }),
-    total: summaryItems.value[2].fee
+    total: summaryItems.value[2].fee,
+    registeredUserId: userId,
+    email: deliveryInfo.email,
+    phone: deliveryInfo.phone
   }
 
   // create order and get encrypted trade info from backend
@@ -102,7 +104,9 @@ async function importUserInfo() {
     deliveryInfo.name = userInfo.value.name || ''
     deliveryInfo.phone = userInfo.value.phone || ''
     deliveryInfo.address = userInfo.value.address?.substring(3) || ''
+    deliveryInfo.city = userInfo.value.address?.substring(0,3) || ''
     citySelect.value!.selectedCity = userInfo.value.address?.substring(0, 3) || ''
+
   }
 }
 

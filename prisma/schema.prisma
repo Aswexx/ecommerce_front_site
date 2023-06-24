@@ -25,6 +25,7 @@ model Product {
   categoryId String
 
   favorite Favorite[]
+  purchase Purchase[]
 }
 
 model Category {
@@ -76,4 +77,36 @@ model Contact {
   type      String   @db.VarChar(10)
   content   String   @db.VarChar(400)
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp
+}
+
+model Order {
+  id               String    @id
+  registeredUserId String?   @map("registered_user_id")
+  tradeId          String?   @unique @map("trade_id")
+  tradeTime        DateTime? @map("trade_time") @db.Timestamp
+  tradeAmount      Int       @map("trade_amount")
+  tradeUserEmail   String?   @map("trade_user_email") @db.VarChar(50)
+  tradeUserPhone   String?   @map("trade_user_phone") @db.VarChar(20)
+  recieverName     String    @map("reciever_name") @db.VarChar(20)
+  recieverAddress  String    @map("reciever_address") @db.VarChar(50)
+  progress         String
+  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamp
+  updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamp
+
+  purchase Purchase[]
+}
+
+model Purchase {
+  id String @id @default(cuid())
+
+  order   Order  @relation(fields: [orderId], references: [id])
+  orderId String @map("order_id")
+
+  product   Product @relation(fields: [productId], references: [id])
+  productId String  @map("product_id")
+
+  count           Int
+  transactionDone Boolean @default(false) @map("transaction_done")
+
+  @@unique([id, orderId, productId])
 }

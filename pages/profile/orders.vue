@@ -1,5 +1,12 @@
+<script lang="ts" setup>
+const userId = useSupabaseUser().value?.id
+const { data: orders, error } = await useFetch<Order[]>(`/api/orders/${userId}`)
+</script>
+
 <template>
-	<div>
-		<h1>訂單紀錄</h1>
-	</div>
+  <div class="w-4/5">
+    <OrderDetailModal
+      :orders="orders || []"
+    />
+  </div>
 </template>

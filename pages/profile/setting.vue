@@ -80,18 +80,16 @@ async function handleSubmit() {
 	const { error } = useDataValidate('profile', profileToSubmit)
 
 	if (error) {
-		//TODO: 處理資料錯誤提示
-		console.log(error.message)
+		useToast('alert-error', error.message)
 		return
 	}
 
-	const result = await useFetch(`/api/users/${userId}`, {
+	await useFetch(`/api/users/${userId}`, {
 		method: 'put',
 		body: profileToSubmit
 	})
 
-	// TODO: 修改完後給 toast，刷新此頁，確保刷新後按鈕 disable
-
+	useToast('alert-info', '資料修改完成')
 }
 
 </script>
