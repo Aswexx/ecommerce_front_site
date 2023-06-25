@@ -73,10 +73,10 @@ async function query() {
         <button @click="query" class="btn btn-primary btn-sm" type="button">查詢</button>
       </div>
 
-      <div>
-        <span v-if="isLoadingData" class="loading loading-spinner loading-lg text-primary"></span>
+      <div class="mt-4">
+        <span v-if="isLoadingData" class="block mx-auto loading loading-spinner loading-lg text-primary"></span>
 
-        <OrderDetailModal
+        <OrderTable
           class="mx-auto w-4/5"
           :orders="orders"
         />

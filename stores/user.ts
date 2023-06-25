@@ -32,7 +32,6 @@ export const useUserStore = defineStore('user', () => {
         email: user.value?.email
       }
     })
-    console.log(userInfo)
   }
 
   return { viewportWidth, user, interactAlerts }

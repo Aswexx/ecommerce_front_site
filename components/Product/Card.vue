@@ -10,8 +10,7 @@ function showDetail(productId: string) {
 
 async function addToFav() {
 	if (!user.value) {
-		console.log(user.value)
-		return alert('請先登入')
+		return useToast('alert-info', '請先登入')
 	} 
 
 	const favoriteRelation = {

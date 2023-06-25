@@ -22,8 +22,6 @@ export default defineEventHandler(async (event) => {
         }
       }
     })
-    console.log('fav', userId)
-    console.log('fav', favProducts)
     return favProducts
   } catch (err) {
     console.error(err)

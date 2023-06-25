@@ -302,7 +302,6 @@ export default defineEventHandler(async (event) => {
     // const news = addFakeNews()
     return { success: getFakeProducts() }
   } catch (e) {
-    console.log(e)
     return { error: e }
   }
 })

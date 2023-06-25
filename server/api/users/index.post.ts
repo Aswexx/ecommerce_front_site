@@ -12,7 +12,6 @@ export default defineEventHandler(async (event) => {
         email
       }
     })
-    console.log('@@', userId)
     return 'pp'
   } catch (err) {
     console.error(err)

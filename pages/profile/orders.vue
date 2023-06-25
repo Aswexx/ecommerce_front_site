@@ -5,7 +5,7 @@ const { data: orders, error } = await useFetch<Order[]>(`/api/orders/${userId}`)
 
 <template>
   <div class="w-4/5">
-    <OrderDetailModal
+    <OrderTable
       :orders="orders || []"
     />
   </div>

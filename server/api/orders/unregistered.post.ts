@@ -4,7 +4,6 @@ const prisma = new PrismaClient()
 export default defineEventHandler(async (event) => {
 	const { email, phone } = await readBody(event)
 	
-	console.log('@@email^phone', email, phone)
   try {
     const result = await prisma.order.findMany({
       where: { tradeUserEmail: email, tradeUserPhone: phone },
@@ -34,6 +33,6 @@ export default defineEventHandler(async (event) => {
 
     return result
   } catch (err) {
-    console.log(err)
+    console.error(err)
   }
 })

@@ -36,9 +36,6 @@ async function login() {
   const baseUrl = useRuntimeConfig().public.HOST_URL
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'google'
-    // options: {
-    //   redirectTo: `${baseUrl}/profile`
-    // }
   })
 
 
@@ -46,8 +43,7 @@ async function login() {
     return console.error(error)
   }
 
-  // TODO: toast 提示登入成功
-  alert('登入成功')
+  useToast('alert-success', '登入成功')
 }
 
 function navToCartPage() {
@@ -69,7 +65,6 @@ async function logout() {
 
 function closeSearchDiv(e: MouseEvent) {
   const targetElement = e.target as HTMLElement
-  console.log('id:', targetElement.id)
   if (targetElement.id === 'search-icon') return
   searchOpened.value = false
 }

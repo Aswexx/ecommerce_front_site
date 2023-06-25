@@ -10,15 +10,11 @@ export default defineEventHandler(async (event) => {
   let decrypted = deCipher.update(body.TradeInfo, 'hex', 'utf8')
   decrypted += deCipher.final('utf8')
 
-  // const tradeInfo = JSON.parse(decrypted)
   const tradeInfo = await new Promise<any>((resolve) => {
     setTimeout(() => {
       resolve(JSON.parse(decrypted))
     },3000)
   })
-  
-  console.log('b-parse', decrypted)
-  console.log('@', tradeInfo)
   
   await prisma.order.update({
     where: {

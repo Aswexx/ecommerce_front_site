@@ -2,6 +2,12 @@
 import { useProductStore } from '@/stores/product'
 import { useUserStore } from '@/stores/user'
 
+definePageMeta({
+  middleware: [function (to, from) {
+    console.log(to, from)
+  }]
+})
+
 const productStore = useProductStore()
 const userStore = useUserStore()
 
