@@ -7,7 +7,7 @@ const user = useSupabaseUser()
 		<Hero
 			:title="`Hello, ${user?.user_metadata.full_name}`"
 			:content="''"
-			:img-url="`https://source.unsplash.com/5Ne6mMQtIdo`"
+			:img-url="`https://source.unsplash.com/iRguZkRTQyA`"
 			:height="'h-[30vh]'"
 		/>
 	</div>

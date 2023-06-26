@@ -2,12 +2,6 @@
 import { useProductStore } from '@/stores/product'
 import { useUserStore } from '@/stores/user'
 
-definePageMeta({
-  middleware: [function (to, from) {
-    console.log(to, from)
-  }]
-})
-
 const productStore = useProductStore()
 const userStore = useUserStore()
 
@@ -15,18 +9,17 @@ const popularProducts = computed(() => {
   return productStore.products.filter(p => p.isPopular)
 })
 
-
-if (process.server) {
-  await productStore.getProducts()
-}
-
 function handleResize() {
   userStore.viewportWidth = window.innerWidth
 }
 
-onMounted(() => {
+onMounted(async () => {
   userStore.viewportWidth = window.innerWidth
   window.addEventListener('resize', handleResize)
+
+  nextTick(() => {
+    productStore.getProducts()
+  })
 })
 
 onUnmounted(() => {

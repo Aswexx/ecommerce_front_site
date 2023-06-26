@@ -43,7 +43,7 @@ export default defineEventHandler(async (event) => {
     LoginType: 0, // 不須登入藍新金流會員
     OrderComment: '測試卡號: 4000-2211-1111-1111', // 可下訂單備註(例如使用優惠券)，呈現在藍新支付頁面
     Email: body.email, // 付款人 email，交易完成會 email 通知付款人
-    ReturnURL: useRuntimeConfig().public.HOST_URL, // 支付完成導向的商店網址
+    ReturnURL: `${useRuntimeConfig().public.HOST_URL}/thanks`, // 支付完成導向的商店網址
     NotifyURL: `${useRuntimeConfig().public.HOST_URL}/api/newebCallback`, // 回傳支付結果的目標後端 url
     ClientBackURL: `${useRuntimeConfig().public.HOST_URL}/cart` // 使用者自行取消，或者 atm 轉帳查看收款帳號後返回商店
   }

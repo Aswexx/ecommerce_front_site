@@ -4,10 +4,8 @@ const { interactAlerts } = useUserStore()
 </script>
 
 <template>
-  <div class="toast toast-end toast-middle">
-    <div v-for="alert in interactAlerts" :key="alert.content" 
-      class="alert bg-[#F1EDEF] text-[#9E7E4A]" :class="alert.type"
-    >
+  <div class="toast toast-end toast-middle z-50">
+    <div v-for="alert in interactAlerts" :key="alert.content" class="alert bg-[#F1EDEF] text-[#9E7E4A]" :class="alert.type">
       <Icon 
         v-if="alert.type === 'alert-success'"
         name="ic:twotone-check-circle-outline" size="24" color="#24d317"

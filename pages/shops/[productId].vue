@@ -1,10 +1,15 @@
 <script lang="ts" setup>
 import  { useProductStore }  from '@/stores/product'
 const { productId } = useRoute().params
-// TODO: make pinia state persist
-// TODO: fix server side 500 error when page reload
 const { products, addToCart } = useProductStore()
 const product = products.find(p => p.id === productId) as Product
+
+if (!product) {
+	throw createError({
+		statusCode: 404,
+		statusMessage: '找不到產品資料'
+	})
+}
 
 const count = ref(1)
 

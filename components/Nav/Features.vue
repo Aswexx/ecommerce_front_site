@@ -33,11 +33,9 @@ function toggleSearch() {
 async function login() {
   if (user.value) return navigateTo('/profile')
   
-  const baseUrl = useRuntimeConfig().public.HOST_URL
   const { error } = await supabase.auth.signInWithOAuth({
-    provider: 'google'
+    provider: 'google',
   })
-
 
   if (error) {
     return console.error(error)
