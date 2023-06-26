@@ -2,6 +2,11 @@
 const seconds = ref(10)
 
 onMounted(() => {
+  const cartItems = localStorage.getItem('cartItems')
+  if (cartItems) {
+    localStorage.removeItem('cartItems')
+  }
+
   const timer: NodeJS.Timer = setInterval(() => {
     if (!seconds.value) {
       clearInterval(timer)
@@ -9,7 +14,8 @@ onMounted(() => {
       return
     }
     seconds.value--
-  },1000)
+  }, 1000)
+
 })
 </script>
 
