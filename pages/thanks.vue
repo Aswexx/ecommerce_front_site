@@ -1,10 +1,14 @@
 <script lang="ts" setup>
+import { useProductStore } from '@/stores/product'
+const productStore = useProductStore()
+
 const seconds = ref(10)
 
 onMounted(() => {
   const cartItems = localStorage.getItem('cartItems')
   if (cartItems) {
     localStorage.removeItem('cartItems')
+    productStore.cartItems.slice(0, cartItems.length)
   }
 
   const timer: NodeJS.Timer = setInterval(() => {
