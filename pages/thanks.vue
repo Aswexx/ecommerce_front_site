@@ -8,7 +8,7 @@ onMounted(() => {
   const cartItems = localStorage.getItem('cartItems')
   if (cartItems) {
     localStorage.removeItem('cartItems')
-    productStore.cartItems.slice(0, cartItems.length)
+    productStore.cartItems.splice(0, cartItems.length)
   }
 
   const timer: NodeJS.Timer = setInterval(() => {
